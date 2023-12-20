@@ -10,6 +10,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,18 +20,35 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Column
     private String title;
+
     @Column
     private String description;
+
     @Column
     private Priority priority;
+
     @Column
     private TaskStatus status;
-    @Column
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User author;
+
     @Column
     private Date creationDate;
+
+    public Task() {
+    }
+
+    public Task(String title, String description, Priority priority, User author) {
+        this.title = title;
+        this.description = description;
+        this.priority = priority;
+        this.author = author;
+    }
 
     public int getId() {
         return id;
@@ -86,5 +105,13 @@ public class Task {
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
+
+    @Override
+    public String toString() {
+        return "Task [id=" + id + ", title=" + title + ", description=" + description + ", priority=" + priority
+                + ", status=" + status + ", author=" + author + ", creationDate=" + creationDate + "]";
+    }
+
+    
 
 }

@@ -1,10 +1,14 @@
 package com.taskmanager.v1.entity;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -13,18 +17,35 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Column
     private String firstName;
+
     @Column
     private String lastName;
+
     @Column
     private String email;
+
     @Column
     private String userName;
+
     @Column
     private String password;
-    @Column
-    private Task[] tasks;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
+    private List<Task> tasks;
+
+    public User() {
+    }
+
+    public User(String firstName, String lastName, String email, String userName, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.userName = userName;
+        this.password = password;
+    }
 
     public int getId() {
         return id;
@@ -74,12 +95,18 @@ public class User {
         this.password = password;
     }
 
-    public Task[] getTasks() {
+    public List<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(Task[] tasks) {
+    public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+                + ", userName=" + userName + ", password=" + password + ", tasks=" + tasks + "]";
     }
 
 }
