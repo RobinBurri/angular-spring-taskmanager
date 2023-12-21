@@ -28,34 +28,36 @@ public class UserRestController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
+    @GetMapping()
     public List<User> getAllUsers() {
-        return null;
+        System.out.println("Get all users");
+        return this.userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
     public User getUser(@PathVariable("id") int id) {
-            return this.userService.getUser(id);
+        return this.userService.getUser(id);
     }
 
-    @PostMapping("/new")
+    @PostMapping()
     public User createUser(@RequestBody User entity) {
         User newUser = this.userService.createNewUser(entity.getFirstName(), entity.getLastName(), entity.getEmail(),
                 entity.getUserName(), entity.getPassword());
         return newUser;
     }
 
-    @DeleteMapping("/")
-    public User deleteUser(@RequestBody User entity) {
-        // TODO: process DELETE request
-        return entity;
+    @DeleteMapping("/{id}")
+    public User deleteUser(@PathVariable("id") int id) {
+        User deletedUser = getUser(id);
+        this.userService.deleteUser(id);
+        return deletedUser;
     }
 
-    @PutMapping("/")
+    @PutMapping()
     public User updatUser(@RequestBody User entity) {
-        // TODO: process PUT request
-
-        return entity;
+        User updatedUser = this.userService.updateUser(entity.getId(), entity.getFirstName(), entity.getLastName(),
+                entity.getEmail(), entity.getUserName(), entity.getPassword());
+        return updatedUser;
     }
 
     @ExceptionHandler
@@ -63,6 +65,13 @@ public class UserRestController {
         UserErrorResponse error = new UserErrorResponse(e.getMessage());
         error.setStatus(HttpStatus.NOT_FOUND.value());
         return ResponseEntity.status(404).body(error);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<UserErrorResponse> handleException(Exception e) {
+        UserErrorResponse error = new UserErrorResponse(e.getMessage());
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        return ResponseEntity.status(400).body(error);
     }
 
 }

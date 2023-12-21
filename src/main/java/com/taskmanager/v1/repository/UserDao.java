@@ -7,5 +7,6 @@ import com.taskmanager.v1.entity.User;
 
 @Repository
 public interface UserDao extends CrudRepository<User, Integer>{
+
     
 }
