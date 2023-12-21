@@ -5,8 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Description;
+import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest(classes = User.class)
+@TestPropertySource("/application-test.properties")
 public class UserEntityTest {
     
 

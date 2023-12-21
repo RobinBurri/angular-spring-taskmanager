@@ -8,10 +8,12 @@ import java.text.SimpleDateFormat;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Description;
+import org.springframework.test.context.TestPropertySource;
 
 import com.taskmanager.v1.model.Priority;
 
 @SpringBootTest(classes = Task.class)
+@TestPropertySource("/application-test.properties")
 public class TaskEntityTest {
 
     @Test
