@@ -21,7 +21,7 @@ public class UserServiceTest {
 
     @Test
     public void throwAnUserNotFoundException() {
-        when(userDao.getUserById(0)).thenThrow(new UserNotFoundException("User not found with id: " + 0));
+        when(userDao.findById(0)).thenThrow(new UserNotFoundException("User not found with id: " + 0));
         assertThrows(UserNotFoundException.class, () -> userService.getUser(0), "Should throw an exception");
     }
 
