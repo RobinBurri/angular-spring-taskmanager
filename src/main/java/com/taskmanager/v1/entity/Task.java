@@ -1,6 +1,7 @@
 package com.taskmanager.v1.entity;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 import com.taskmanager.v1.model.Priority;
 import com.taskmanager.v1.model.TaskStatus;
@@ -38,12 +39,18 @@ public class Task {
     private User author;
 
     @Column
-    private Date creationDate;
+    private String creationDate;
 
     public Task() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date newDate = new Date(System.currentTimeMillis());
+        this.creationDate = dateFormat.format(newDate);
     }
 
     public Task(String title, String description, Priority priority, User author) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date newDate = new Date(System.currentTimeMillis());
+        this.creationDate = dateFormat.format(newDate);
         this.title = title;
         this.description = description;
         this.priority = priority;
@@ -98,12 +105,8 @@ public class Task {
         this.author = author;
     }
 
-    public Date getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
     }
 
     @Override
